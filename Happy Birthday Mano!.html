@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Mano!!! (づ๑•ᴗ•๑)づ🎂!</title>
+    <style> 
+        body {
+            text-align: center;
+            background-color: #f3dfe5;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            margin: 0;
+        }
+        #main, #birthdayScene, #noScene, #specialNoteScene {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #birthdayScene, #noScene, #specialNoteScene {
+            background-size: cover;
+            background-position: center;
+        }
+        #hiCat {
+            max-width: 300px;
+        }
+        .pink-button {
+            background-color: #ffdde1;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, background-color 0.3s;
+        }
+        .pink-button:hover {
+            background-color: #ffffff;
+            transform: scale(1.1);
+        }
+        #goBack {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        #playSong {
+            font-size: 22px;
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: 2px solid #ffb6c1;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #specialNote {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+        .balloon {
+            position: absolute;
+            width: 150px;
+            bottom: -100px; /* Start position */
+        }
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-120vh); opacity: 0; }
+        }
+        #message {
+            max-width: 80%;
+            font-size: 18px;
+            color: #f8a5cf;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+        <img src="cat-hi.png" alt="Hi Cat" id="hiCat"> 
+        <p id="message">YAAAAAA!!!! IT'S YOUR HAPPY DAYY!!!! SO I MADE SOMETHING SPECIAL FOR YOU HEHEHEHEH ( ˶ˆᗜˆ˵ )( ˶ˆᗜˆ˵ )( ˶ˆᗜˆ˵ ) WOULD YOU LIKE TO SEE IT?</p>
+        <div>
+            <button class="pink-button" onclick="goToBirthday()">Yes (>.<)</button>
+            <button class="pink-button" onclick="goToNoScene()">No (¬､¬)</button>
+        </div>
+    </div>
+
+    <div id="noScene" style="display: none; background-image: url('cat-drag.gif'); background-size: cover; width: 100vw; height: 105vh;">
+        <button id="goBack" class="pink-button" onclick="goToMain()">Go Back (¬､¬)</button>
+    </div>
+
+    <div id="birthdayScene" style="display: none; width: 100vw; height: 100vh; position: relative;">
+        <img src="cat-party.png" alt="Birthday Wallpaper" style="position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1;"> 
+        <button id="playSong" class="pink-button" onclick="playBirthday()">Happy Birthday Mano!!! (づ๑•ᴗ•๑)づ🎂</button>
+        <button id="specialNote" class="pink-button" onclick="goToSpecialNote()">Special Note ٩(＾◡＾)۶</button>
+        <audio id="btsSong" src="bts-song.mp3"></audio>
+    </div>
+
+    <div id="specialNoteScene" style="display: none; width: 100vw; height: 100vh; position: relative;">
+        <img src="special-note.png" alt="Special Note Wallpaper" style="position: absolute; width: 100%; height: 100%; object-fit: cover; z-index: -1;"> 
+        <button id="goBack" class="pink-button" onclick="goToBirthday()">Back to Party</button>
+    </div>
+
+    <script>
+        function goToBirthday() {
+            document.getElementById("main").style.display = "none";
+            document.getElementById("birthdayScene").style.display = "flex";
+            document.getElementById("specialNoteScene").style.display = "none";
+        }
+        function goToNoScene() {
+            document.getElementById("main").style.display = "none";
+            document.getElementById("noScene").style.display = "flex";
+        }
+        function goToMain() {
+            document.getElementById("noScene").style.display = "none";
+            document.getElementById("main").style.display = "flex";
+        }
+        function goToSpecialNote() {
+            document.getElementById("birthdayScene").style.display = "none";
+            document.getElementById("specialNoteScene").style.display = "flex";
+        }
+        function playBirthday() {
+            let song = document.getElementById("btsSong");
+            if (song.paused) {
+                song.play();
+            } else {
+                song.currentTime = 0;
+            }
+
+            for (let i = 0; i < 8; i++) {
+                let balloon = document.createElement("img");
+                balloon.src = `cat-balloon-${i+1}.png`;
+                balloon.className = "balloon";
+                balloon.style.left = Math.random() * window.innerWidth + "px";
+                balloon.style.bottom = "-100px";
+                balloon.style.position = "absolute";
+                balloon.style.width = "250px";
+                balloon.style.animation = `float ${5 + Math.random() * 3}s linear forwards`;
+
+                document.body.appendChild(balloon);
+                
+                setTimeout(() => { 
+                    balloon.remove(); 
+                }, 8000);
+            }
+        }
+    </script>
+</body>
+</html>
